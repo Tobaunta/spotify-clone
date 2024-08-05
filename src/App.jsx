@@ -1,15 +1,13 @@
 import './App.css';
-import { Stack, Button } from '@mui/material';
+import { Box } from '@mui/material';
+import { Login } from './pages/Login';
+import { Home } from './pages/Home';
 
-function App() {
+export default function App({ spotifyApi }) {
 	return (
-		<div className="App">
-			<h1>Techover Self Made - Spotify</h1>
-			<Stack spacing={2} direction="row">
-				<Button variant="contained">Login</Button>
-			</Stack>
-		</div>
+		<Box className="App">
+			<Home />
+			<Login spotifyApi={spotifyApi} />
+		</Box>
 	);
 }
-
-export default App;
