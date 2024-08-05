@@ -1,6 +1,6 @@
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
-export const cliendId = proccess.env.REACT_APP_CLIENT_ID;
-export const liveURL = proccess.env.REACT_APP_LIVE_URL;
+export const cliendId = import.meta.env.VITE_CLIENT_ID;
+export const liveURL = import.meta.env.VITE_LIVE_URL;
 export const devURL = 'http://localhost:5173/';
 export const redirectURI = process.env.NODE_ENV === 'production' ? liveURL : devURL;
 export const scopes = [
