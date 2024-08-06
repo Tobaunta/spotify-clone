@@ -1,19 +1,30 @@
 import { useState, useEffect } from 'react';
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, Skeleton } from '@mui/material';
 import { NavItem } from '../NavItem/NavItem';
 import HomeIcon from '@mui/icons-material/Home';
 import { NavPlaylist } from '../NavPlaylist/NavPlaylist';
 
 export const SideNav = ({ spotifyApi, token }) => {
+	const [loading, setLoading] = useState(true);
+	const [playlists, setPlaylists] = useState([]);
 	useEffect(() => {
 		async function getPlaylists() {
 			if (!spotifyApi) return;
 			const data = await spotifyApi.getUserPlaylists();
-			console.log(data.body);
+			setPlaylists(data.body.items);
+			setLoading(false);
 		}
-
 		getPlaylists();
 	}, [spotifyApi, token]);
+
+	const renderPlaylists = () => {
+		if (loading) {
+			return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((_, i) => <NavPlaylist loading={loading} key={i} />);
+		}
+		return playlists.map((playlist, i) => (
+			<NavPlaylist key={i} id={playlist.id} name={playlist.name} loading={loading} />
+		));
+	};
 	return (
 		<Box
 			sx={{
@@ -29,9 +40,7 @@ export const SideNav = ({ spotifyApi, token }) => {
 			<Box px={3} py={1}>
 				<Divider sx={{ backgroundColor: '#ffffff40' }} />
 			</Box>
-			<Box sx={{ overflowY: 'auto', flex: 1 }}>
-				<NavPlaylist loading={false} name="Pop" id="123" />
-			</Box>
+			<Box sx={{ overflowY: 'auto', flex: 1 }}>{renderPlaylists()}</Box>
 		</Box>
 	);
 };
