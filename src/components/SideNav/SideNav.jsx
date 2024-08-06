@@ -2,6 +2,15 @@ import { useState, useEffect } from 'react';
 import { Box, Divider } from '@mui/material';
 
 export const SideNav = ({ spotifyApi, token }) => {
+    useEffect(() => {
+        async function getPlaylists() {
+            if(!spotifyApi) return;
+            const data = await spotifyApi.getUserPlaylists();
+            console.log(data.body)
+        }
+
+        getPlaylists();
+    }, [spotifyApi, token])
 	return (
 		<Box
 			sx={{
