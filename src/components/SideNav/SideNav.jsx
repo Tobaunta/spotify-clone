@@ -2,25 +2,26 @@ import { useState, useEffect } from 'react';
 import { Box, Divider } from '@mui/material';
 import { NavItem } from '../NavItem/NavItem';
 import HomeIcon from '@mui/icons-material/Home';
+import { NavPlaylist } from '../NavPlaylist/NavPlaylist';
 
 export const SideNav = ({ spotifyApi, token }) => {
-    useEffect(() => {
-        async function getPlaylists() {
-            if(!spotifyApi) return;
-            const data = await spotifyApi.getUserPlaylists();
-            console.log(data.body)
-        }
+	useEffect(() => {
+		async function getPlaylists() {
+			if (!spotifyApi) return;
+			const data = await spotifyApi.getUserPlaylists();
+			console.log(data.body);
+		}
 
-        getPlaylists();
-    }, [spotifyApi, token])
+		getPlaylists();
+	}, [spotifyApi, token]);
 	return (
 		<Box
 			sx={{
-                backgroundColor: 'background.default',
+				backgroundColor: 'background.default',
 				width: 230,
-                height: '100%',
+				height: '100%',
 				display: 'flex',
-				flexDirection: 'column',
+				flexDirection: 'column'
 			}}
 		>
 			<Box p={3} component="img" src="/Spotify_Logo.png" alt="Spotify Logo" sx={{ maxWidth: '75%' }} />
@@ -28,7 +29,9 @@ export const SideNav = ({ spotifyApi, token }) => {
 			<Box px={3} py={1}>
 				<Divider sx={{ backgroundColor: '#ffffff40' }} />
 			</Box>
-			<Box sx={{ overflowY: 'auto', flex: 1 }}>{/* Playlists */}</Box>
+			<Box sx={{ overflowY: 'auto', flex: 1 }}>
+				<NavPlaylist loading={false} name="Pop" id="123" />
+			</Box>
 		</Box>
 	);
 };
