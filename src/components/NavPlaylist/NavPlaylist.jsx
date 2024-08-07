@@ -15,7 +15,7 @@ export const NavPlaylist = ({ name, id, loading }) => {
 					fontSize: 10
 				}}
 			>
-				{loading ? <Skeleton variant='text' sx={{ fontSize: 10 }} /> : name}
+				{loading ? <Skeleton variant="text" sx={{ fontSize: 10 }} /> : name}
 			</Box>
 		</NavLink>
 	);
