@@ -1,5 +1,6 @@
 import { Box, Grid, Typography, Avatar } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { PlayerControls } from '../PlayerControls/PlayerControls';
 
 export const Player = ({ spotifyApi, token }) => {
 	const [localPlayer, setLocalPlayer] = useState();
@@ -62,13 +63,13 @@ export const Player = ({ spotifyApi, token }) => {
 
 	useEffect(() => {
 		const tranferPlayback = async () => {
-			if(device) {
+			if (device) {
 				const res = await spotifyApi.getMyDevices();
 				console.log(res);
 				await spotifyApi.transferMyPlayback([device], false);
 			}
-		}
-		tranferPlayback();		
+		};
+		tranferPlayback();
 	}, [device, spotifyApi]);
 
 	return (
@@ -93,7 +94,9 @@ export const Player = ({ spotifyApi, token }) => {
 					/>
 					<Box>
 						<Typography sx={{ color: 'text.primary', fontSize: 14 }}>{currentTrack?.name}</Typography>
-						<Typography sx={{ color: 'text.secondary', fontSize: 10 }}>{currentTrack?.artists[0].name}</Typography>
+						<Typography sx={{ color: 'text.secondary', fontSize: 10 }}>
+							{currentTrack?.artists[0].name}
+						</Typography>
 					</Box>
 				</Grid>
 				<Grid
@@ -101,7 +104,7 @@ export const Player = ({ spotifyApi, token }) => {
 					sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'center', alignItems: 'center' }}
 					md={4}
 				>
-					<Typography>Player Controls</Typography>
+					<PlayerControls isPaused={isPaused} player={localPlayer} progress={progress} duration={duration} />
 				</Grid>
 				<Grid
 					item
