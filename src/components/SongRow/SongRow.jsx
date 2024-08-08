@@ -2,7 +2,7 @@ import { Avatar, Box, Grid, Typography, Skeleton } from '@mui/material';
 import { formatTime } from '../../utils/formatTime';
 
 export const SongRow = ({ images, title, artist, album, duration, i, loading, position, contextUri, spotifyApi }) => {
-	const image = images?.lenght > 0 ? images[1].url : null;
+	const image = images?.length > 0 ? images[0].url : null;
 
 	const onRowClick = async () => {
 		const song = {
