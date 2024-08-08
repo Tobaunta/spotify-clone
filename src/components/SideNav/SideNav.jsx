@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Box, Divider, Skeleton } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { NavItem } from '../NavItem/NavItem';
 import HomeIcon from '@mui/icons-material/Home';
 import { NavPlaylist } from '../NavPlaylist/NavPlaylist';

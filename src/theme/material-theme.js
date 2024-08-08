@@ -16,6 +16,6 @@ export const themeOptions = createTheme({
             primary: '#fff',
             secondary: '#b3b3b3'
         },
-        devider: '#292929'
+        divider: '#292929'
     }
 })

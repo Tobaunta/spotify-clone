@@ -3,42 +3,43 @@ import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { SongTable } from '../components/SongTable/SongTable';
 
-export const Playlist = (spotifyApi, token) => {
-	const [playlistInfo, setPlaylistInfo] = useState(null);
+export const Playlist = ({ spotifyApi, token }) => {
+	const [playlistInfo, setPlaylistInfo] = useState();
 	const [tracks, setTracks] = useState([]);
-	const [status, setStatus] = useState({ isLoading: true, isError: false });
+	const [status, setStatus] = useState({ isLoading: false, isError: false });
 	const { id } = useParams();
 
-	const formattedTracks = useCallback(
-		(tracks) =>
-			tracks.map((item, i) => {
-				const { track } = item;
+	const formatTrackData = useCallback(
+		(songs) => {
+			return songs.map((song, i) => {
+				const { track } = song;
 				track.contextUri = `spotify:playlist:${id}`;
 				track.position = i;
 				return track;
-			}),
+			});
+		},
 		[id]
 	);
 
 	useEffect(() => {
 		const getData = async () => {
-			setStatus({ isLoading: true, isError: null });
+			setStatus((prev) => ({ ...prev, isLoading: true }));
 			try {
 				const playlistDetails = await spotifyApi.getPlaylist(id);
 				setPlaylistInfo({
 					image: playlistDetails.body.images[0].url,
 					name: playlistDetails.body.name
 				});
-				const { tracks } = playlistDetails.body.tracks;
-				const formattedTracks = formatTracks(tracks);
+
+				const { tracks } = playlistDetails.body;
+				const formattedTracks = formatTrackData(tracks.items);
 				setTracks(formattedTracks);
 			} catch (error) {
-				console.error(error);
 				setStatus({ isLoading: false, isError: error });
 			}
-			getData().finally(() => setStatus({ isLoading: false, isError: null }));
 		};
-	}, [id, formattedTracks]);
+		getData().finally(() => setStatus({ isLoading: false, isError: null }));
+	}, [id, formatTrackData, spotifyApi, token]);
 	return (
 		<Box id="playlist__page" sx={{ backgroundColor: 'background.paper', flex: 1, overflowY: 'auto' }}>
 			<Box
@@ -78,7 +79,7 @@ export const Playlist = (spotifyApi, token) => {
 					)}
 				</Box>
 			</Box>
-			<SongTable />
+			<SongTable tracks={tracks} loading={status.isLoading} spotifyApi={spotifyApi} />
 		</Box>
 	);
 };
