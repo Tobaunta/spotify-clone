@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Home } from '../../pages/Home';
 import { Playlist } from '../../pages/Playlist';
 import { SideNav } from '../SideNav/SideNav';
+import { Player } from '../Player/Player';
 import { getAccessTokenFromStorage } from '../../utils/getAccessTokenFromStorage';
 import { useEffect, useState } from 'react';
 
@@ -27,6 +28,7 @@ export const Dashboard = ({ spotifyApi }) => {
 					<Route path="/" element={<Home />} />
 				</Routes>
 			</Box>
+			{token && <Player spotifyApi={spotifyApi} />}
 		</Box>
 	);
 };
