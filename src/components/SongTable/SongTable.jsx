@@ -3,13 +3,27 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { SongRow } from '../SongRow/SongRow';
 
 export const SongTable = ({ tracks, loading, spotifyApi }) => {
-    const renderTracks = () => {
-        if(loading) {
-            return [1,2,3,4,5].map((_, i) => <SongRow loading={loading} key={i} i={i} images={null} />)
-        }
+	const renderTracks = () => {
+		if (loading) {
+			return [1, 2, 3, 4, 5].map((_, i) => <SongRow loading={loading} key={i} i={i} images={null} />);
+		}
 
-        return tracks.map((song, i) => <SongRow loading={loading} key={i} i={i} images={song.album.images} album={song.album.name} title={song.name} artist={song.artists[0].name} duration={song.duration_ms / 1000} />)
-    }
+		return tracks.map((song, i) => (
+			<SongRow
+				loading={loading}
+				key={i}
+				i={i}
+				images={song.album.images}
+				album={song.album.name}
+				title={song.name}
+				artist={song.artists[0].name}
+				duration={song.duration_ms / 1000}
+				position={song.position}
+                contextUri={song.context_uri}
+                spotifyApi={spotifyApi}
+			/>
+		));
+	};
 	return (
 		<Box
 			p={{ xs: 3, md: 4 }}
@@ -37,7 +51,7 @@ export const SongTable = ({ tracks, loading, spotifyApi }) => {
 			<Box pb={2}>
 				<Divider sx={{ width: '100%', height: 1 }} />
 			</Box>
-            {renderTracks()}
+			{renderTracks()}
 		</Box>
 	);
 };
