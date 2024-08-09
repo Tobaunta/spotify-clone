@@ -4,7 +4,7 @@ import { Home } from '../../pages/Home';
 import { Playlist } from '../../pages/Playlist';
 import { SideNav } from '../SideNav/SideNav';
 import { Player } from '../Player/Player';
-import { MobileNav } from "../MobileNav/MobileNav";
+import { MobileNav } from '../MobileNav/MobileNav';
 import { getAccessTokenFromStorage } from '../../utils/getAccessTokenFromStorage';
 import { useEffect, useState } from 'react';
 

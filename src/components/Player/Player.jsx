@@ -2,6 +2,7 @@ import { Box, Grid, Typography, Avatar } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { PlayerControls } from '../PlayerControls/PlayerControls';
 import { PlayerVolume } from '../PlayerVolume/PlayerVolume';
+import { PlayerOverlay } from '../PlayerOverlay/PlayerOverlay';
 
 export const Player = ({ spotifyApi, token }) => {
 	const [localPlayer, setLocalPlayer] = useState();
@@ -11,6 +12,7 @@ export const Player = ({ spotifyApi, token }) => {
 	const [device, setDevice] = useState();
 	const [duration, setDuration] = useState();
 	const [progress, setProgress] = useState();
+	const [playerOverlayIsOpen, setPlayerOverlayIsOpen] = useState(false);
 
 	useEffect(() => {
 		const script = document.createElement('script');
@@ -89,6 +91,7 @@ export const Player = ({ spotifyApi, token }) => {
 					width: '100%',
 					borderTop: '1px solid #292929'
 				}}
+				onClick={() => setPlayerOverlayIsOpen((prev) => !prev)}
 			>
 				<Grid item xs={12} md={4} sx={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
 					<Avatar
@@ -128,6 +131,18 @@ export const Player = ({ spotifyApi, token }) => {
 					<PlayerVolume player={localPlayer} />
 				</Grid>
 			</Grid>
+			<PlayerOverlay
+				playerOverlayIsOpen={playerOverlayIsOpen}
+				closeOverlay={() => setPlayerOverlayIsOpen(false)}
+				player={localPlayer}
+				isPaused={isPaused}
+				duration={duration}
+				progress={progress}
+				cover={currentTrack?.album.images[0].url}
+				title={currentTrack?.name}
+				artist={currentTrack?.artists[0].name}
+				isActive={isActive}
+			/>
 		</Box>
 	);
 };
