@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 import { Home } from '../../pages/Home';
+import { Library } from '../../pages/Library';
 import { Playlist } from '../../pages/Playlist';
 import { SideNav } from '../SideNav/SideNav';
 import { Player } from '../Player/Player';
@@ -25,7 +26,7 @@ export const Dashboard = ({ spotifyApi }) => {
 				<SideNav spotifyApi={spotifyApi} token={token} />
 				<Routes>
 					<Route path="/playlist/:id" element={<Playlist spotifyApi={spotifyApi} token={token} />} />
-					<Route path="/library" element={<div>Library</div>} />
+					<Route path="/library" element={<Library spotifyApi={spotifyApi} token={token} />} />
 					<Route path="/" element={<Home />} />
 				</Routes>
 			</Box>
